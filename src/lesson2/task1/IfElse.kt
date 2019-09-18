@@ -68,7 +68,8 @@ fun ageDescription(age: Int): String = when (age % 100) {
     else -> when (age % 10) {
         in 2..4 -> "$age года"
         in 5..9 -> "$age лет"
-        else -> "$age год"
+        1 -> "$age год"
+        else -> "$age лет"
     }
 }
 
@@ -84,12 +85,15 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double =
-    when {
-        ((t1 * v1 + t2 * v2 + t3 * v3) / 2) <= t1 * v1 -> ((t1 * v1 + t2 * v2 + t3 * v3) / 2) / v1
-        ((t1 * v1 + t2 * v2 + t3 * v3) / 2) <= t1 * v1 + t2 * v2 -> t1 + (((t1 * v1 + t2 * v2 + t3 * v3) / 2) - v1 * t1) / v2
-        else -> t1 + t2 + (((t1 * v1 + t2 * v2 + t3 * v3) / 2) - v1 * t1 - v2 * t2) / v3
+): Double {
+    val halfWay = ((t1 * v1 + t2 * v2 + t3 * v3) / 2)
+    return when {
+        halfWay <= t1 * v1 -> halfWay / v1
+        halfWay <= t1 * v1 + t2 * v2 -> t1 + (halfWay - v1 * t1) / v2
+        else -> t1 + t2 + ((halfWay - v1 * t1 - v2 * t2) / v3)
     }
+}
+
 
 /**
  * Простая
@@ -104,9 +108,12 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) 3 else
-    if ((kingX == rookX1) || (kingY == rookY1)) 1 else if ((kingX == rookX2) || (kingY == rookY2)) 2 else 0
-
+): Int = when {
+    ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) -> 3
+    ((kingX == rookX1) || (kingY == rookY1)) -> 1
+    ((kingX == rookX2) || (kingY == rookY2)) -> 2
+    else -> 0
+}
 /**
  * Простая
  *
@@ -136,7 +143,7 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = if ((a + b > c) && (a + c > b) && (a + c > b)) when {
+fun triangleKind(a: Double, b: Double, c: Double): Int = if ((a + b > c) && (a + c > b) && (c + b > a)) when {
     (a >= b && a >= c) -> if (a * a == c * c + b * b) 1 else if ((a * a > c * c + b * b)) 2 else 0
     (b >= c && b >= a) -> if (b * b == c * c + a * a) 1 else if ((b * b > c * c + a * a)) 2 else 0
     else -> if (c * c == a * a + b * b) 1 else if ((c * c > a * a + b * b)) 2 else 0

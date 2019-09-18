@@ -3,8 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 /**
  * Пример
@@ -29,13 +28,8 @@ fun isNumberHappy(number: Int): Boolean = (number / 1000 + number / 100 % 10 == 
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
-    (x1 == x2) -> true
-    (y1 == y2) -> true
-    (x1 - y1 == x2 - y2) -> true
-    (x1 + y1 == x2 + y2) -> true
-    else -> false
-}
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    (x1 == x2) || (y2 == y1) || (abs(x2 - x1) == abs(y2 - y1))
 
 
 /**
@@ -66,11 +60,7 @@ fun daysInMonth(month: Int, year: Int): Int = when {
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = if (r1 <= r2) when {
-    sqrt((x1 - x2).pow(2) + (y1 - y2).pow(2)) + r1 <= r2 -> true
-    else -> false
-}
-else false
+): Boolean = sqrt((x1 - x2).pow(2) + (y1 - y2).pow(2)) + r1 <= r2
 
 /**
  * Средняя
@@ -82,8 +72,9 @@ else false
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = when {
-    (a * b <= r * s) -> true
-    (b * c <= r * s) -> true
-    (a * c <= r * s) -> true
+    a >= b && a >= c -> max(b, c) <= max(r, s) && min(b, c) <= min(r, s)
+    b >= a && b >= c -> max(a, c) <= max(r, s) && min(a, c) <= min(r, s)
+    c >= b && c >= a -> max(b, a) <= max(r, s) && min(b, a) <= min(r, s)
     else -> false
 }
+
