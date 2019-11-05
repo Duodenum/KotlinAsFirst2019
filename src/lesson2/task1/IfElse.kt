@@ -143,12 +143,16 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = if ((a + b > c) && (a + c > b) && (c + b > a)) when {
-    (a >= b && a >= c) -> if (a * a == c * c + b * b) 1 else if ((a * a > c * c + b * b)) 2 else 0
-    (b >= c && b >= a) -> if (b * b == c * c + a * a) 1 else if ((b * b > c * c + a * a)) 2 else 0
-    else -> if (c * c == a * a + b * b) 1 else if ((c * c > a * a + b * b)) 2 else 0
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val maxSide = maxOf(a, b, c) * maxOf(a, b, c)
+    val sumTriangle = a * a + c * c + b * b
+    return if ((a + b > c) && (a + c > b) && (c + b > a)) when {
+        sumTriangle - maxSide * 2 == 0.0 -> 1
+        sumTriangle - maxSide * 2 > 0.0 -> 0
+        else -> 2
+    }
+    else (-1)
 }
-else (-1)
 
 
 /**
