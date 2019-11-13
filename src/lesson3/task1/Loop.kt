@@ -222,11 +222,11 @@ fun revert(n: Int): Int {
     var number = n
     var revertNumber = 0
     var digit = digitNumber(n) - 1
-    do {
+    while (number > 0) {
         revertNumber += ((number % 10) * (10.0.pow(digit))).toInt()
         digit -= 1
         number /= 10
-    } while (number % 10 > 0)
+    }
     return revertNumber
 }
 
