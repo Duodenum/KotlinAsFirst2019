@@ -71,12 +71,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var count = 0
-    var number = n
-    do {
+    var count = 1
+    var number = n / 10
+    while (number !== 0) {
         count++
         number /= 10
-    } while (number > 0)
+    }
     return count
 }
 
@@ -289,7 +289,7 @@ fun squareSequenceDigit(n: Int): Int {
         grade = 10.0.pow(digitNumber(sqrNumber)).toInt()
         count += digitNumber(sqrNumber)
         sequence = (sequence * grade + sqrNumber)
-        if (count > n) sequence / 10.0.pow(digitNumber(count - n)).toInt()
+        if (count > n) sequence /= 10.0.pow(digitNumber(count - n)).toInt()
     }
     return sequence % 10
 }
