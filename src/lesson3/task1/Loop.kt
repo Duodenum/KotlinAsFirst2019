@@ -114,13 +114,19 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var divisor = 2
-    while (n % divisor > 0) {
-        if (n % 2 == 0) break
-        divisor += 1
+    var result = 0
+    for (i in 2..n) {
+        if (isPrime(n)) return n
+        if (n % 2 == 0) return 2
+        if (n % 3 == 0) return 3
+        if (n % 10 == 5) return 5
+        result = i
+        if (n % i == 0) break
     }
-    return divisor
+return result
 }
+
+
 
 /**
  * Простая
@@ -283,15 +289,15 @@ fun squareSequenceDigit(n: Int): Int {
     var numbers = 1
     var count = 1
     var grade = 10
-    while (count < n) {
+    do {
         numbers += 1
         sqrNumber = numbers * numbers
         grade = 10.0.pow(digitNumber(sqrNumber)).toInt()
         count += digitNumber(sqrNumber)
         sequence = (sequence * grade + sqrNumber)
-        if (count > n) sequence /= 10.0.pow(digitNumber(count - n)).toInt()
-    }
-    return sequence % 10
+        if (count > n) sequence /= 10.0.pow(count - n).toInt()
+    } while (count < n)
+    return sequence
 }
 
 /**
