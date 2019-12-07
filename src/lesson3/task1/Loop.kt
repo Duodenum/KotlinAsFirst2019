@@ -116,10 +116,6 @@ fun lcm(m: Int, n: Int): Int {
 fun minDivisor(n: Int): Int {
     var result = 0
     for (i in 2..n) {
-        if (isPrime(n)) return n
-        if (n % 2 == 0) return 2
-        if (n % 3 == 0) return 3
-        if (n % 10 == 5) return 5
         result = i
         if (n % i == 0) break
     }
@@ -162,7 +158,6 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
     for (number in m..n) {
         k = number
         if ((sqrt(number.toDouble()) % 1.0) == 0.0) break
-
     }
     return (sqrt(k.toDouble()) % 1.0) == 0.0
 }
@@ -187,7 +182,7 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
 fun collatzSteps(x: Int): Int {
     var sequence = x
     var count = 0
-    while (sequence !== 1) {
+    while (sequence != 1) {
         if (sequence % 2 == 0) sequence /= 2 else sequence = 3 * sequence + 1
         count++
     }
