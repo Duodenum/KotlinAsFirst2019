@@ -2,8 +2,10 @@
 
 package lesson4.task1
 
+import lesson1.task1.accountInThreeYears
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import lesson3.task1.digitNumber
 import lesson3.task1.minDivisor
 import kotlin.math.abs
 import kotlin.math.pow
@@ -163,13 +165,7 @@ fun times(a: List<Int>, b: List<Int>): Int = TODO()
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int {
-    var result = 0
-    for ((degree, i) in (p.indices).withIndex()) {
-        result += p[i] * x.toDouble().pow(degree).toInt()
-    }
-    return result
-}
+fun polynom(p: List<Int>, x: Int): Int = (p.mapIndexed { index, i -> i * ((x.toDouble()).pow(index)).toInt() }).sum()
 
 /**
  * Средняя
@@ -198,7 +194,7 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> {
-    var list = mutableListOf<Int>()
+    val list = mutableListOf<Int>()
     var number = n
     var divisor = 0
     while (number > 1) {
