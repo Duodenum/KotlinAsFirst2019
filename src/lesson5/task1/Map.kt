@@ -121,7 +121,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = (b + a
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
     for ((keys, values) in b) {
-        if ((a[keys] == b[keys]) && (a[values] == b[values])) a.remove(keys)
+        if (a[keys] == values) a.remove(keys)
     }
 }
 
@@ -133,9 +133,9 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    var nameList = mutableListOf<String>()
+    val nameList = mutableListOf<String>()
     for (name in b) {
-        if (a.contains(name)) nameList.add(name)
+        if (name in a) nameList.add(name)
     }
     return nameList
 }
@@ -157,7 +157,14 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val phoneBook = mapA.toMutableMap()
+    for ((name, number) in mapB) {
+        phoneBook[name] = phoneBook.getOrDefault(name, number)
+        if (phoneBook.getOrDefault(name, number) != mapB[name]) phoneBook[name] += ", $number"
+    }
+return phoneBook
+}
 
 /**
  * Средняя
@@ -169,8 +176,18 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *   averageStockPrice(listOf("MSFT" to 100.0, "MSFT" to 200.0, "NFLX" to 40.0))
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
-fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> = TODO()
-
+fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
+    val res = mutableMapOf<String, Double>()
+    var average = 0.0
+    var lastAv: Double
+    for ((stock, price) in stockPrices) {
+        lastAv = average
+        average = price
+        if (res.contains(stock)) average = (average + lastAv) / 2
+        res[stock] = average
+    }
+    return res
+}
 /**
  * Средняя
  *
