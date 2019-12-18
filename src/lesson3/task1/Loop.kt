@@ -122,8 +122,6 @@ fun minDivisor(n: Int): Int {
 return result
 }
 
-
-
 /**
  * Простая
  *
@@ -266,7 +264,7 @@ fun hasDifferentDigits(n: Int): Boolean {
         repeatNumber = repeatNumber * 10 + divisor
         number /= 10
     }
-    return n !== repeatNumber
+    return n != repeatNumber
 }
 
 /**
@@ -279,20 +277,16 @@ fun hasDifferentDigits(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var sequence = 1
+    var count = 0
     var sqrNumber = 1
-    var numbers = 1
-    var count = 1
-    var grade = 10
-    do {
-        numbers += 1
-        sqrNumber = numbers * numbers
-        grade = 10.0.pow(digitNumber(sqrNumber)).toInt()
+    var number = 1
+    while (count < n) {
+        sqrNumber = number * number
         count += digitNumber(sqrNumber)
-        sequence = (sequence * grade + sqrNumber)
-        if (count > n) sequence /= 10.0.pow(count - n).toInt()
-    } while (count < n)
-    return sequence
+        number++
+    }
+    if (count > n) sqrNumber /= (10.0.pow(count - n)).toInt()
+    return sqrNumber % 10
 }
 
 /**
