@@ -163,7 +163,7 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
         phoneBook[name] = phoneBook.getOrDefault(name, number)
         if (phoneBook.getOrDefault(name, number) != mapB[name]) phoneBook[name] += ", $number"
     }
-return phoneBook
+    return phoneBook
 }
 
 /**
@@ -188,6 +188,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     }
     return res
 }
+
 /**
  * Средняя
  *
