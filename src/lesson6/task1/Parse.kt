@@ -86,14 +86,20 @@ fun dateStrToDigit(str: String): String {
         "ноября",
         "декабря"
     )
-    val date = str.split(" ")
-    if (date.size != 3) return ""
-    val day = date[0].toIntOrNull()
-    val year = date[2].toIntOrNull()
-    if (!monthList.contains(date[1])) return ""
-    val month = monthList.indexOf(date[1]) + 1
-    if (day != null && (year != null)) {
+    val date: List<String>
+    val day: Int?
+    val month: Int?
+    val year: Int?
+    try {
+        date = str.split(" ")
+        if (date.size != 3) return ""
+        day = date[0].toInt()
+        year = date[2].toInt()
+        if (!monthList.contains(date[1])) return ""
+        month = monthList.indexOf(date[1]) + 1
         if (day > daysInMonth(month, year.toInt())) return ""
+    } catch (e: NumberFormatException) {
+        return ""
     }
     return String.format("%02d.%02d.%d", day, month, year)
 }

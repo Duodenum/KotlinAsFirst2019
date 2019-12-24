@@ -132,13 +132,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit {
  * В выходном списке не должно быть повторяюихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val nameList = mutableListOf<String>()
-    for (name in b) {
-        if (name in a) nameList.add(name)
-    }
-    return nameList
-}
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = (a.intersect(b)).toList()
 
 /**
  * Средняя
@@ -177,16 +171,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
  *     -> mapOf("MSFT" to 150.0, "NFLX" to 40.0)
  */
 fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Double> {
-    val res = mutableMapOf<String, Double>()
-    var average = 0.0
-    var lastAv: Double
-    for ((stock, price) in stockPrices) {
-        lastAv = average
-        average = price
-        if (res.contains(stock)) average = (average + lastAv) / 2
-        res[stock] = average
-    }
-    return res
+    val res = stockPrices.groupBy({ it.first }, { it.second }).toMap()
+    return res.mapValues { it.value.sum() / it.value.size }
 }
 
 /**

@@ -129,7 +129,8 @@ return result
  */
 fun maxDivisor(n: Int): Int {
     var divisor = n / 2
-    if (isPrime(n)) return 1 else while (n % divisor > 0) {
+    if (isPrime(n)) return 1
+    else while (n % divisor > 0) {
         divisor -= 1
     }
     return divisor
