@@ -98,7 +98,7 @@ fun centerFile(inputName: String, outputName: String) {
         output.newLine()
         output.close()
     } else {
-        val theLine = input.maxBy { it.length }!!.length
+        val theLine = input.maxBy { it.trim().length }!!.trim().length
         for (string in input) {
             var line = string.trim()
             line = " ".repeat((theLine - line.length) / 2) + line
