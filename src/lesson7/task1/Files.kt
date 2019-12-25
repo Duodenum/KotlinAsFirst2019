@@ -95,16 +95,18 @@ fun centerFile(inputName: String, outputName: String) {
     val output = File(outputName).bufferedWriter()
     if (File(inputName).readText().isEmpty()) {
         output.write("")
+        output.newLine()
+        output.close()
+    } else {
+        val theLine = input.maxBy { it.length }!!.length
+        for (string in input) {
+            var line = string.trim()
+            line = " ".repeat((theLine - line.length) / 2) + line
+            output.write(line)
+            output.newLine()
+        }
         output.close()
     }
-    val theLine = input.maxBy { it.length }!!.length
-    for (string in input) {
-        var line = string.trim()
-        line = " ".repeat((theLine - line.length) / 2) + line
-        output.write(line)
-        output.newLine()
-    }
-    output.close()
 }
 
 /**
