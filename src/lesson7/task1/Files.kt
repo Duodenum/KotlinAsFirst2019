@@ -95,7 +95,7 @@ fun centerFile(inputName: String, outputName: String) {
     val output = File(outputName).bufferedWriter()
     if (File(inputName).readText().isEmpty()) {
         output.write("")
-        output.newLine()
+        output.close()
     }
     val theLine = input.maxBy { it.length }!!.length
     for (string in input) {
